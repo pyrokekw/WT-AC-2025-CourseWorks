@@ -1,0 +1,138 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String   // хэш
+  name      String?
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ideas     Idea[]
+  comments  Comment[]
+  votes     Vote[]
+
+  hackathonParticipants HackathonParticipant[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Idea {
+  id          String      @id @default(uuid())
+  title       String
+  description String      @db.Text
+  status      IdeaStatus  @default(PENDING)
+  rating      Float       @default(0)
+  author      User        @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String
+  tags        Tag[]       @relation("IdeaToTag")
+  comments    Comment[]
+  votes       Vote[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  hackathonIdeas HackathonIdea[]
+}
+
+enum IdeaStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Tag {
+  id    String @id @default(uuid())
+  name  String @unique
+
+  ideas Idea[] @relation("IdeaToTag")
+
+  @@map("tags")
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  content   String   @db.Text
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String
+  idea      Idea     @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  ideaId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Vote {
+  id        String   @id @default(uuid())
+  value     Int      // 1 = лайк, -1 = дизлайк (или только 1)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  idea      Idea     @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  ideaId    String
+  createdAt DateTime @default(now())
+
+  @@unique([userId, ideaId])
+  @@map("votes")
+}
+
+model Hackathon {
+  id          String      @id @default(uuid())
+  name        String
+  description String?     @db.Text
+  theme       String?
+  
+  status      HackathonStatus @default(UPCOMING)
+  
+  startDate   DateTime
+  endDate     DateTime
+  ideaSubmissionEnd DateTime?
+  
+  maxIdeasPerUser Int @default(3)
+  rules         String? @db.Text
+  
+  ideas       HackathonIdea[]
+  participants HackathonParticipant[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum HackathonStatus {
+  UPCOMING
+  SUBMISSION
+  VOTING
+  ENDED
+}
+
+model HackathonIdea {
+  id          String    @id @default(uuid())
+  hackathon   Hackathon @relation(fields: [hackathonId], references: [id], onDelete: Cascade)
+  hackathonId String
+  idea        Idea      @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  ideaId      String
+  
+  votes       Int       @default(0)
+  position    Int?
+  
+  @@unique([hackathonId, ideaId])
+}
+
+model HackathonParticipant {
+  id          String    @id @default(uuid())
+  hackathon   Hackathon @relation(fields: [hackathonId], references: [id], onDelete: Cascade)
+  hackathonId String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  
+  ideasSubmitted Int     @default(0)
+  isWinner      Boolean  @default(false)
+  
+  @@unique([hackathonId, userId])
+}
