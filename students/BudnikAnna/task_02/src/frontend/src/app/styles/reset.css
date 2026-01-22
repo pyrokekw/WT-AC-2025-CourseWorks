@@ -1,0 +1,119 @@
+/* === Aggressive CSS Reset === */
+
+/* Box sizing everywhere */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove all default spacing */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Full height */
+html,
+body {
+    height: 100%;
+}
+
+/* Kill default typography */
+body {
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+/* Headings: no bold/size by default */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+/* Lists: no bullets */
+ul,
+ol {
+    list-style: none;
+}
+
+/* Links: no underline/blue */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Media: responsive + block */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Tables: no gaps */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Forms: remove weird defaults */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+/* Buttons: consistent baseline */
+button {
+    cursor: pointer;
+}
+
+/* Textareas: avoid horizontal resize ugliness */
+textarea {
+    resize: vertical;
+}
+
+/* Quotes: remove default quote marks */
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+    content: '';
+}
+
+/* HR: remove default */
+hr {
+    border: none;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.2;
+}
+
+/* Ensure text wrapping */
+p,
+span,
+li {
+    overflow-wrap: break-word;
+}
+
+/* :focus { outline: none; } */
