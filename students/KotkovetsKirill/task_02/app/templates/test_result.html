@@ -1,0 +1,7 @@
+<!-- htmlhint doctype-first:false -->
+{% extends 'base.html' %}
+{% block content %}
+  <h1>{{ test.title }} — Result</h1>
+  <p>Your score: <strong>{{ correct }} / {{ total }}</strong></p>
+  <a class="btn-primary" href="/courses/{{ test.course_id }}/tests">Back to tests</a>
+{% endblock %}

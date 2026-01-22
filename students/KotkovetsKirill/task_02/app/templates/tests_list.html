@@ -1,0 +1,12 @@
+<!-- htmlhint doctype-first:false -->
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Tests for {{ course.title }}</h1>
+  <ul class="tests-list">
+    {% for t in tests %}
+      <li class="test-card"><a href="/tests/{{ t.id }}">{{ t.title }}</a> - {{ t.description }}</li>
+    {% else %}
+      <li>No tests yet</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,0 +1,11 @@
+<!-- htmlhint doctype-first:false -->
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Register</h1>
+  <form method="post">
+    <label>Username <input name="username"></label><br>
+    <label>Email <input name="email"></label><br>
+    <label>Password <input type="password" name="password"></label><br>
+    <button type="submit">Register</button>
+  </form>
+{% endblock %}

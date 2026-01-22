@@ -1,0 +1,19 @@
+<!-- htmlhint doctype-first:false -->
+{% extends 'base.html' %}
+{% block content %}
+  <h1>{{ test.title }}</h1>
+  <p>{{ test.description }}</p>
+  <form method="post" class="test-form">
+    {% for q in test.questions %}
+      <div class="question">
+        <p class="q-text">{{ loop.index }}. {{ q.text }}</p>
+        <ul class="options">
+          {% for o in q.options %}
+            <li><label><input type="radio" name="q_{{ q.id }}" value="{{ o.id }}"> {{ o.text }}</label></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+    <button class="btn-primary" type="submit">Submit Test</button>
+  </form>
+{% endblock %}

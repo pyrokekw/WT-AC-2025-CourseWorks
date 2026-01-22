@@ -1,0 +1,27 @@
+<!-- htmlhint doctype-first:false --> 
+{% extends 'base.html' %}
+{% block content %}
+  <div style="display:flex; gap:18px; align-items:flex-start;">
+    <div style="flex:2">
+      <h1 style="margin-top:0">{{ course.title }}</h1>
+      <p class="course-desc">{{ course.description }}</p>
+
+      <h2>Lessons</h2>
+      <ul>
+      {% for l in course.lessons %}
+        <li style="margin-bottom:8px"><a href="/lessons/{{ l.id }}">{{ l.title }}</a>
+          {% if user and l.id in completed_ids %}
+            <span class="badge-completed" style="margin-left:10px">✓ Completed</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
+    <aside style="flex:1">
+      <div class="course-card">
+        <h3 style="margin-top:0">Course Actions</h3>
+        <p><a class="btn-primary" href="/courses/{{ course.id }}/tests">Take tests</a></p>
+      </div>
+    </aside>
+  </div>
+{% endblock %}

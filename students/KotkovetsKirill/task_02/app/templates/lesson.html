@@ -1,0 +1,36 @@
+<!-- htmlhint doctype-first:false -->
+{% extends 'base.html' %}
+{% block content %}
+  <div class="course-card" style="padding:20px">
+    <h1 style="margin-top:0">{{ lesson.title }}</h1>
+    <p>{{ lesson.content }}</p>
+    {% if lesson.video_url %}
+      <p>Video: <a href="{{ lesson.video_url }}" target="_blank">Watch</a></p>
+    {% endif %}
+
+    {% if user %}
+      <div style="margin-top:12px">
+        {% if completed %}
+          <span class="badge-completed">✓ Completed</span>
+        {% else %}
+          <button class="btn-primary" id="mark-btn" onclick="markCompleted({{ lesson.id }}, this); return false;">Mark completed</button>
+          <span class="badge-completed" id="completed-badge" style="display:none">✓ Completed</span>
+        {% endif %}
+      </div> 
+
+      <h3 style="margin-top:18px">Comments</h3>
+      <ul>
+      {% for c in comments %}
+        <li style="margin-bottom:8px"><strong>{{ c.user.username }}</strong>: {{ c.content }}</li>
+      {% endfor %}
+      </ul>
+      <form action="/lessons/{{ lesson.id }}/comment" method="post">
+        <textarea name="content" rows="3" placeholder="Write your comment" style="margin-bottom:8px"></textarea>
+        <br>
+        <button class="btn-primary" type="submit">Add comment</button>
+      </form>
+    {% else %}
+      <p><a href="/login">Login</a> to mark progress and comment.</p>
+    {% endif %}
+  </div>
+{% endblock %}

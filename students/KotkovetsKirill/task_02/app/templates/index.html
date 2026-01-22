@@ -1,0 +1,18 @@
+<!-- htmlhint doctype-first:false -->
+{% extends 'base.html' %}
+{% block content %}
+  <section class="main-hero">
+    <p class="hero-title">Learn fast, test quickly</p>
+    <p class="hero-sub">Short courses with focused lessons and quick tests — perfect for busy learners.</p>
+  </section>
+
+  <h2 style="margin-top:18px">Courses</h2>
+  <section class="grid">
+    {% for c in courses %}
+      <article class="course-card">
+        <p class="course-title"><a href="/courses/{{ c.id }}">{{ c.title }}</a></p>
+        <p class="course-desc">{{ c.description }}</p>
+      </article>
+    {% endfor %}
+  </section>
+{% endblock %}

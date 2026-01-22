@@ -1,0 +1,6 @@
+kotkovets.db
+__pycache__/
+.venv/
+instance/
+*.pyc
+.env
