@@ -1,0 +1,25 @@
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+import { Role } from '@prisma/client';
+
+@Injectable()
+export class UsersService {
+  constructor(private prisma: PrismaService) {}
+
+  async findByEmail(email: string) {
+    return this.prisma.prisma.user.findUnique({ where: { email } });
+  }
+
+  async findById(id: string) {
+    return this.prisma.prisma.user.findUnique({ where: { id } });
+  }
+
+  async create(data: {
+    email: string;
+    password: string;
+    name?: string;
+    role?: Role;
+  }) {
+    return this.prisma.prisma.user.create({ data });
+  }
+}
