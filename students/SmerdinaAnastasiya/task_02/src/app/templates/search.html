@@ -1,0 +1,38 @@
+<!-- htmlhint doctype-first:false -->
+{% extends 'base.html' %}
+{% block content %}
+  {% if mood %}
+    <h3>Playlists for mood «{{ mood }}»</h3>
+  {% else %}
+    <h3>Search results for "{{ q }}"</h3>
+  {% endif %}
+
+  <div class="mb-3">
+    <strong>Filter by mood:</strong>
+    {% for m in moods %}
+      <a class="btn btn-sm btn-outline-secondary ms-1" href="/search?mood={{ m.name }}">{{ m.name }}</a>
+    {% endfor %}
+  </div>
+
+  {% if tracks %}
+  <h5>Tracks</h5>
+  <div class="list-group mb-3">
+    {% for t in tracks %}
+    <a class="list-group-item list-group-item-action" href="#">{{ t.title }} — {{ t.artist }}</a>
+    {% else %}
+    <div class="list-group-item">No tracks found</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <h5>Playlists</h5>
+  <div class="row">
+    {% for p in playlists %}
+    <div class="col-md-4">
+      <div class="card mb-3"><div class="card-body"><a href="/playlist/{{ p.id }}">{{ p.title }}</a></div></div>
+    </div>
+    {% else %}
+    <p>No playlists found</p>
+    {% endfor %}
+  </div>
+{% endblock %}

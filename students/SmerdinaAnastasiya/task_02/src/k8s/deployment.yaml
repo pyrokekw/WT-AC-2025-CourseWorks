@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moodplay
+  labels:
+    app: moodplay
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moodplay
+  template:
+    metadata:
+      labels:
+        app: moodplay
+    spec:
+      containers:
+      - name: moodplay
+        image: moodplay:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: FLASK_ENV
+          value: production
+        - name: FLASK_APP
+          value: run.py
+        - name: DATABASE_URL
+          value: sqlite:///app.db
+        resources: {
+          requests: {
+            cpu: "250m",
+            memory: "256Mi"
+          },
+          limits: {
+            cpu: "500m",
+            memory: "512Mi"
+          }
+        }
