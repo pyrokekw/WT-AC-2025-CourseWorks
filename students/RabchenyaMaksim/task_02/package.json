@@ -1,0 +1,15 @@
+{
+  "name": "city-complaints",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev:server": "pnpm --filter server dev",
+    "dev:web": "pnpm --filter web dev",
+    "prisma:generate": "pnpm --filter server prisma:generate",
+    "prisma:migrate": "pnpm --filter server prisma:migrate dev --name init",
+    "postinstall": "pnpm prisma:generate"
+  },
+  "devDependencies": {
+    "pnpm": "^9.0.0"
+  }
+}
