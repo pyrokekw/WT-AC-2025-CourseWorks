@@ -1,0 +1,116 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  admin
+  moderator
+  user
+}
+
+enum ReportStatus {
+  new
+  reviewed
+  closed
+}
+
+model User {
+  id            String     @id @default(uuid())
+  username      String     @unique
+  passwordHash  String     @map("password_hash")
+  role          Role       @default(user)
+  tokenVersion  Int        @default(0) @map("token_version")
+  createdAt     DateTime   @default(now()) @map("created_at")
+  updatedAt     DateTime   @updatedAt @map("updated_at")
+  
+  favorites     Favorite[]
+  reports       Report[]
+
+  @@map("users")
+}
+
+model Source {
+  id          String    @id @default(uuid())
+  name        String
+  url         String
+  description String?
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  
+  articles    Article[]
+
+  @@map("sources")
+}
+
+model Article {
+  id          String    @id @default(uuid())
+  sourceId    String    @map("source_id")
+  title       String
+  content     String?   @db.Text
+  url         String?
+  publishedAt DateTime  @map("published_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  
+  source      Source       @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  tags        ArticleTag[]
+  favorites   Favorite[]
+  reports     Report[]
+
+  @@map("articles")
+}
+
+model Tag {
+  id        String       @id @default(uuid())
+  name      String       @unique
+  createdAt DateTime     @default(now()) @map("created_at")
+  updatedAt DateTime     @updatedAt @map("updated_at")
+  
+  articles  ArticleTag[]
+
+  @@map("tags")
+}
+
+model ArticleTag {
+  articleId String  @map("article_id")
+  tagId     String  @map("tag_id")
+  
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, tagId])
+  @@map("article_tags")
+}
+
+model Favorite {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  articleId String   @map("article_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, articleId])
+  @@map("favorites")
+}
+
+model Report {
+  id        String       @id @default(uuid())
+  userId    String       @map("user_id")
+  articleId String       @map("article_id")
+  reason    String       @db.Text
+  status    ReportStatus @default(new)
+  createdAt DateTime     @default(now()) @map("created_at")
+  updatedAt DateTime     @updatedAt @map("updated_at")
+  
+  user      User         @relation(fields: [userId], references: [id])
+  article   Article      @relation(fields: [articleId], references: [id])
+
+  @@map("reports")
+}

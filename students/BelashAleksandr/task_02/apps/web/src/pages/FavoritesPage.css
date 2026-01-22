@@ -1,0 +1,47 @@
+.favorites-page h1 {
+  margin-bottom: 2rem;
+}
+
+.favorites-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.favorite-item {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.favorite-content {
+  flex: 1;
+}
+
+.favorite-item h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.favorite-item h2 a {
+  color: #333;
+}
+
+.btn-remove {
+  flex-shrink: 0;
+}
+
+@media (width <= 768px) {
+  .favorite-item {
+    flex-direction: column;
+  }
+  
+  .btn-remove {
+    width: 100%;
+  }
+}

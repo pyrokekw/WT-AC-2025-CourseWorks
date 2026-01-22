@@ -1,0 +1,100 @@
+.moderation-page h1 {
+  margin-bottom: 2rem;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.filter-btn {
+  padding: 0.5rem 1.5rem;
+  border: 2px solid #e9ecef;
+  background: white;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.filter-btn.active {
+  background-color: #06c;
+  color: white;
+  border-color: #06c;
+}
+
+.reports-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.report-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+}
+
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.report-header h3 {
+  font-size: 1.25rem;
+  flex: 1;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.status-new {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.status-reviewed {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.status-closed {
+  background-color: #6c757d;
+  color: white;
+}
+
+.report-info {
+  margin-bottom: 1rem;
+  color: #6c757d;
+  font-size: 0.875rem;
+}
+
+.report-info p {
+  margin-bottom: 0.25rem;
+}
+
+.report-reason {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.report-reason p {
+  margin-top: 0.5rem;
+  line-height: 1.5;
+}
+
+.report-actions {
+  display: flex;
+  gap: 1rem;
+}
